@@ -1,0 +1,88 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+<style type="text/css">
+  md-dialog 
+  {
+	max-width: 80%;
+	max-height: 80%;
+	width: 80%;
+	height: 80%;
+	border-radius: 0;
+  }
+
+  .md-padding
+  {
+    background: #fff !important;
+  }
+
+  .tabsdemoDynamicHeight md-content 
+  {
+    background-color: transparent !important; 
+  }
+  .tabsdemoDynamicHeight md-content md-tabs 
+  {
+    background: #f6f6f6;
+    border: 1px solid #e1e1e1; 
+  }
+  .tabsdemoDynamicHeight md-content md-tabs md-tabs-wrapper
+  {
+    background: white; 
+  }
+  .tabsdemoDynamicHeight md-content h1:first-child
+  {
+    margin-top: 0; 
+  }
+</style>
+
+
+<md-dialog aria-label="Time Logs" ng-cloak>
+
+<div ng-cloak>
+  <!-- <md-button ng-click="hide()" md-autofocus style="float: right;">
+    Close
+  </md-button> -->
+  <md-content>
+  
+    <md-tabs md-dynamic-height md-border-bottom>
+
+      <md-tab label="Search Progress Reports" >
+
+    	<div class="col-md-12" ng-repeat="specific in progressReportSpcfc">
+	        <md-card>
+
+	          <md-toolbar class="md-theme-indigo">
+	              <h1 class="md-toolbar-tools">Results</h1>
+	              </md-toolbar>
+	          <md-content>
+
+	            <ul style="list-style: none;">
+	              <li><h4>Name : {{ specific.FirstName }} {{ specific.MiddleName }} {{ specific.LastName }} </h4></li>
+	              <li><h4>Hygiene : {{ specific.Hygiene }} </h4></li>
+	              <li><h4>Health and Medication : {{ specific.HealthMedication }} </h4></li>
+	              <li><h4>Nutrition : {{ specific.Nutrition }} </h4></li>
+	              <li><h4>Appointments : {{ specific.Appointments }} </h4></li>
+	              <li><h4>School/ Homework : {{ specific.SchoolHomework }} </h4></li>
+	              <li><h4>Relationships : {{ specific.Relationships }} </h4></li>
+	              <li><h4>AWOL Contact : {{ specific.AWOLContact }} </h4></li>
+	              <li><h4>Progress in Goals : {{ specific.ProgressGoals }} </h4></li>
+	              <li><h4>Created By : {{ specific.CreatedBy }} </h4></li>
+	            </ul>
+	              
+	            
+	            
+
+	          </md-content>
+	        </md-card>
+
+	      </div>
+
+      </md-tab>
+
+      <!-- <md-tab label="Add Progress Reports">
+
+      </md-tab> -->
+    </md-tabs>
+  </md-content>
+</div>
+
+</md-dialog>
+

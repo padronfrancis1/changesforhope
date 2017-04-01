@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Signup Employee</title>
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+
+    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css" crossorigin="anonymous"> -->
+
+    <link rel="stylesheet" href="/css/bootstrap-3.3.7/dist/css/bootstrap.min.css" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+     <!-- AngularJS Material CSS now available via Google CDN; version 1.0.7 used here -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+    
+
+    <!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
+
+    <style type="text/css">
+      md-backdrop.md-sidenav-backdrop{
+          display:none
+      }
+    </style>
+
+    <script type="text/javascript">
+      function Reload(){
+        location.reload();
+      }
+    </script>
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+  <section class="container" ng-controller="MyCtrl" style="width: 70%;margin: 100px auto;border: 0px solid #333;">
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <md-card>
+          <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">Register Employee</h1>
+          </md-toolbar>
+          <md-card-content>
+
+            
+
+
+            <form method="POST" name="signupForm" action="/signup" id="signupForm">
+
+
+
+              <md-input-container class="md-block">
+                <input type="text"
+                id="username" name="username"
+                ng-model="formData.username"
+                required minlength="2" maxlength="100"
+                ng-hide="userExist == false"
+                >
+
+                <div ng-messages="signupForm.username.$error" role="alert">
+                  <div ng-message-exp="['required', 'minlength', 'maxlength']" style="color: red;">
+                    Input must be between 2 and 100 characters long.
+                  </div>
+                </div>
+
+              </md-input-container>
+
+
+
+              <md-button class="md-raised md-primary" ng-click="checkUserName()" ng-show="formData.username.length > 0" ng-show="formData.username.length > 0">Check User Name</md-button>
+
+              <md-button class="md-raised md-primary" onclick="Reload()">Try Again</md-button>
+              <br>
+              <br>
+
+              <p ng-hide="userExist == false || formData.username.length > 0" ng-show="userExist == true"> 
+
+              Username unavaialable</p>
+
+              <div ng-hide="userExist == true" ng-show="userExist == false">
+
+              <label ng-model="label">{{label}}</label>
+              <p ng-hide="userExist == true" ng-show="userExist == false" style="color: green;"> Username avaialable </p>
+
+                <md-input-container class="md-block">
+                  <input type="text"
+                  ng-hide="userExist == true" 
+                  ng-show="userExist == false"
+                  id="firstname" name="firstname"
+                  placeholder="Enter First Name" 
+                  ng-model="formData.firstname"
+                  required minlength="2" maxlength="100"
+                  >
+                  <div ng-messages="signupForm.firstname.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength']" style="color: red;">
+                      Input must be between 2 and 100 characters long.
+                    </div>
+                  </div>
+
+                </md-input-container>
+
+                <!-- md-input-container class="md-block">
+                  <input type="text"
+                  id="permissiontype" name="permissiontype"
+                  placeholder="Enter Permissiom Type" 
+                  ng-model="formData.permissiontype"
+                  required minlength="2" maxlength="100"
+                  >
+                  <div ng-messages="signupForm.permissiontype.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength']" style="color: red;">
+                      Input must be between 2 and 100 characters long.
+                    </div>
+                  </div>
+
+                </md-input-container> -->
+
+
+                  <!-- <md-input-container class="md-block">
+                    <md-select placeholder="Enter Permissiom Type" ng-model="permissiontype" id="permissiontype" name="permissiontype" required minlength="2" maxlength="100">
+
+                      <md-option ng-repeat="type in permissions" ng-value="state.abbrev">
+                        {{state.abbrev}}
+                      </md-option>
+                    </md-select>
+                    <div ng-messages="signupForm.permissiontype.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength']" style="color: red;">
+                        Input must be between 2 and 100 characters long.
+                      </div>
+                    </div>
+                  </md-input-container> -->
+
+                  <md-input-container class="md-block">
+                    <md-select ng-model="formData.permission"
+                    placeholder="Enter Permission Type" 
+                    id="permission" name="permission" required minlength="2" maxlength="100">
+
+                      <md-option ng-repeat="state in permissions" ng-value="state.abbrev">
+                        {{state.abbrev}}
+                      </md-option>
+                    </md-select>
+                    <div ng-messages="signupForm.permissiontype.$error" role="alert">
+                      <div ng-message-exp="['required', 'minlength', 'maxlength']" style="color: red;">
+                        Input must be between 2 and 100 characters long.
+                      </div>
+                    </div>
+                  </md-input-container>
+
+
+
+                <md-input-container class="md-block">
+                  <input type="text"
+                  id="middlename" name="middlename"
+                  placeholder="Enter Middle Name" 
+                  ng-model="formData.middlename"
+                  required minlength="2" maxlength="100"
+                  >
+                  <div ng-messages="signupForm.middlename.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength']" style="color: red;">
+                      Input must be between 2 and 100 characters long.
+                    </div>
+                  </div>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                  <input type="text"
+                  id="lastname" name="lastname"
+                  placeholder="Enter Last Name" 
+                  ng-model="formData.lastname"
+                  required minlength="2" maxlength="100"
+                  >
+                  <div ng-messages="signupForm.lastname.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength']" style="color: red;">
+                      Input must be between 2 and 100 characters long.
+                    </div>
+                  </div>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                  <input type="number"
+                  id="phonenumber" name="phonenumber"
+                  placeholder="Enter Phone Number" 
+                  ng-model="formData.phonenumber"
+                  required minlength="2" maxlength="100"
+                  >
+                  <div ng-messages="signupForm.phonenumber.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'number']" style="color: red;">
+                      Input must be a number.
+                    </div>
+                  </div>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                  <input type="text"
+                  id="email" name="email"
+                  placeholder="Enter Email Address" 
+                  ng-model="formData.email"
+                  required minlength="2" maxlength="100"
+                  ng-pattern="/^.+@.+\..+$/"
+                  >
+                  <div ng-messages="signupForm.email.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']" style="color: red;">
+                      Input must be between 2 and 100 characters long.
+                    </div>
+                  </div>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                  
+                  <input type="password" id="password" name="password" ng-model="formData.password" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" placeholder="Password" required />
+
+                  <div ng-messages="signupForm.password.$error" role="alert">
+                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']" style="color: red;">
+                      -Input must be between 2 and 100 characters long. <br>
+                      -Must contain one lower &amp; uppercase letter, and one non-alpha character (a number or a symbol.)
+                    </div>
+                  </div>
+
+                </md-input-container>
+
+                <md-input-container class="md-block">
+
+
+                  <div class="fieldset" ng-class="{'has-error':formData.password_c.$invalid && !formData.password_c.$pristine}">
+                    <label for="password_c">Confirm Password</label>
+                    <input type="password" id="password_c" name="password_c" ng-model="formData.password_c" placeholder="confirm password" valid-password-c="formData.password" required />
+
+                    <p ng-show="signupForm.password_c.$error.noMatch" class="error" style="color: red;">Passwords do not match.</span>
+                      <p ng-show="signupForm.password_c.$error.required" class="error">*</p>
+                  </div>
+
+                </md-input-container>
+              </div>
+
+              
+              <button type="submit" class="btn btn-default" ng-show="userExist.username == nul"> Submit </button>
+              <a href="/" style="float: right;">Home</a>
+
+              
+            </form>
+            
+
+          </md-card-content>
+          
+        </md-card>
+
+
+
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="/js/jquery-1.12.4.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="css/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+
+
+  <script src="/js/angular/angular.js"></script>
+  <script src="/js/angular-animate/angular-animate.js"></script>
+  <script src="/js/angular-aria/angular-aria.js"></script>
+
+  <!-- AngularJS Material Javascript now available via Google CDN; version 1.0.7 used here -->
+  <script src="/js/angular-material/angular-material.js"></script>
+
+  <script src="/js/angular-bootstrap/ui-bootstrap.js"></script>
+  <script src="/js/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="/js/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
+
+  <script src="/js/angular-material-data-table/dist/md-data-table.js"></script>
+  <script src="/js/angular-messages/angular-messages.js"></script>
+
+  <script src="/js/ng-file-upload/ng-file-upload.js"></script>
+
+  <!--dateRangPicker-->
+  <script src="/js/moment/moment.js"></script>
+  <script src="/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+  <script src="/js/angular-daterangepicker/js/angular-daterangepicker.js"></script>
+
+  <link rel="stylesheet" href="/css/bootstrap-daterangepicker/daterangepicker.css"/>
+
+  <script src="/angular_controllers/gen_ctrl.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+nav
+search client - isolate - done
+progress report validation
+button for view progress report
+Search Client - Or
+change button 
+footer
+Downlaod Uplaod
+Magsearch ng client by or then 
+magpapakita lahat ng results once click then show report
+Profile Picture
+fix bugs
+Total number of clients to be shown in window
+
+red check user name
+dont proceed to other fields unless
+username does not exist
+start and end date for time logs
+fix view time logs 
+insert timout when user closes browser
+
+Crytical Incident repotr
+
+
+Total number of hours

@@ -1,0 +1,247 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+<style type="text/css">
+  md-dialog {
+      max-width: 80%;
+      max-height: 80%;
+      width: 80%;
+      height: 80%;
+      border-radius: 0;
+  }
+
+  .md-padding
+  {
+    background: #fff !important;
+  }
+
+  .tabsdemoDynamicHeight md-content 
+  {
+    background-color: transparent !important; 
+  }
+  .tabsdemoDynamicHeight md-content md-tabs 
+  {
+    background: #f6f6f6;
+    border: 1px solid #e1e1e1; 
+  }
+  .tabsdemoDynamicHeight md-content md-tabs md-tabs-wrapper
+  {
+    background: white; 
+  }
+  .tabsdemoDynamicHeight md-content h1:first-child
+  {
+    margin-top: 0; 
+  }
+</style>
+
+
+<md-dialog aria-label="Time Logs" ng-cloak>
+
+<div ng-cloak>
+  <!-- <md-button ng-click="hide()" md-autofocus style="float: right;">
+    Close
+  </md-button> -->
+  <md-content>
+  
+    <md-tabs md-dynamic-height md-border-bottom>
+
+      <md-tab label="Search Employees" >
+        <md-content layout-padding class="md-padding">
+
+            <form name="SearchEmpInfoForm">
+
+              <md-input-container class="md-block">
+                <label>Employee Email</label>
+                <input required type="email" name="empEmailSearch" ng-model="formData.empEmailSearch"
+                       minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+
+                <div ng-messages="SearchEmpInfoForm.empEmailSearch.$error" role="alert">
+                  <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                    Your email must be between 10 and 100 characters long and look like an e-mail address.
+                  </div>
+                </div>
+              </md-input-container>
+
+              <md-dialog-actions layout="row">
+                <md-button ng-click="SearchEmployees()" md-autofocus type="submit" ng-show="formData.empEmailSearch != null && formData.empEmailSearch.length > 5">
+                  Search Employee Records
+                </md-button>
+              </md-dialog-actions>
+
+            </form>
+
+        </md-content>
+
+        <md-content layout-padding class="md-padding" ng-show="empInformation != null">
+          
+          <!-- <h4>First Name: {{ empInformation.FirstName }}</h4> -->
+          <div layout="row">
+            <div class="col-md-12" style="width: 50% margin: 0 auto;border: 3px solid #333;padding: 0px 0px;">
+
+              <md-toolbar class="md-table-toolbar md-default" style="padding: 0px 0px;">
+                <div class="md-toolbar-tools">
+                  <span>Search Results</span>
+                </div>
+              </md-toolbar>
+              <article style="padding: 2% 2%;">
+                <h3 class="md-subhead">First Name: {{ empInformation.FirstName }}</h3>
+                <h3 class="md-subhead">Middle Name: {{ empInformation.MiddleName }}</h3>
+                <h3 class="md-subhead">Last Name: {{ empInformation.LastName }}</h3>
+                <h3 class="md-subhead">Address: {{ empInformation.Address }}</h3>
+                <h3 class="md-subhead">Phone Number: {{ empInformation.PhoneNumber }}</h3>
+                <h3 class="md-subhead">Email: {{ empInformation.email }}</h3>
+                <h3 class="md-subhead">Username: {{ empInformation.username }}</h3>
+
+
+              </article>
+
+            </div>
+          </div>
+        </md-content>
+
+      </md-tab>
+
+      <md-tab label="View Time Logs">
+        <md-content layout-padding class="md-padding">
+            <form name="EmpInfoForm">
+
+              <!-- <md-input-container class="md-block">
+                <label>Employee Username</label>
+
+                <input type="text" name="empUserNameTimeLog" ng-model="formData.empUserNameTimeLog" />
+
+
+              </md-input-container>
+
+              <p>Or</p> -->
+
+<!--               <md-input-container class="md-block">
+                <label>Employee Email</label>
+
+                <input type="text" name="empEmailTimeLog" ng-model="formData.empEmailTimeLog" />
+
+
+              </md-input-container>
+ -->
+              <md-input-container class="md-block">
+
+                <div style="display:inline-block; min-height:290px;">
+                  
+                  <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="{minMode: 'month'}" datepicker-popup="MM/yyyy" datepicker-mode="'month'"></div>
+                </div>
+
+                <!-- <input type="text" class="form-control" datepicker-popup="MM/yyyy" ng-model="dt" is-open="opened" datepicker-options="{minMode: 'month'}" datepicker-mode="'month'"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span> -->
+              </md-input-container>
+
+              <!-- <md-input-container class="md-block">
+
+                <input type="text" name="EmpInfoForDateLog" ng-model="formData.EmpInfoForDateLog" ng-disabled="true" ng-hide="true" />
+
+                <p ng-show="NullDate" style="color: red;">Please provide a date by selecting below</p>
+
+                <div ng-messages="EmpInfoForm.EmpInfoForDateLog.$error" role="alert" ng-show="!NullDate">
+                  <div ng-message-exp="['required']">
+                    Please Select date below.
+                  </div>
+                </div>
+
+              </md-input-container> -->
+
+
+              <!-- <md-input-container class="md-block">
+
+                <input date-range-picker class="form-control date-picker" type="text" ng-model="SelectedDate" />
+
+              </md-input-container>
+              -->
+
+              <!-- <input type="text" class="form-control" datepicker-popup="MM/yyyy" ng-model="dt" is-open="opened" datepicker-options="{minMode: 'month'}" datepicker-mode="'month'"/>
+              <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span> -->
+
+              <md-input-container>
+                <input type="text" name="Month" ng-model="formData.Month" ng-disabled="true" ng-hide="true" />
+              </md-input-container>
+
+              <md-input-container>
+                <input type="text" name="Year" ng-model="formData.Year" ng-disabled="true" ng-hide="true" />
+              </md-input-container>
+
+            </form>
+
+            <md-dialog-actions layout="row">
+              <md-button ng-click="ShowTimeLogs()" md-autofocus type="submit" class="md-primary md-raised">
+                Search Employee Log
+              </md-button>
+              <md-button class="md-accent md-raised" ng-click="DownloadCSV()">Download as csv</md-button>
+            </md-dialog-actions>
+
+
+            <md-table-container>
+
+            <div class="row" ng-show="logs.length > 0">
+              <div class="col-md-12">
+                <md-toolbar class="md-table-toolbar md-default" style="padding: 0px 0px;">
+                  <div class="md-toolbar-tools">
+                    <span>Search Results</span>
+                  </div>
+                </md-toolbar>
+
+                
+
+                <div ng-repeat="info in logs" style="padding-left: 3%;">
+
+                  <table md-table>
+                    <thead md-head>
+
+                      <!-- <tr md-row>
+                        <th md-column>
+                          <h4>{{ info.CurrentDate }}</h4>
+                        </th>
+
+                      </tr> -->
+
+                    </thead>
+                    
+                    <tbody md-body>
+                      
+                        <!-- <tr md-row>
+                            <td md-cell><h4>{{ info.CurrentDate }}</h4>
+                        </tr> -->
+
+                        <tr md-row>
+                            <td md-cell><h4>{{ info.username }}</h4>
+                        </tr>
+
+                        <tr md-row style="border-bottom: 1px solid #333;">
+                          <td md-cell>Time In: {{ info.TimeIn }}</td>
+                        </tr>
+
+                        <tr md-row>
+                          <td md-cell>Time Out: {{ info.TimeOut }}</td>
+                        </tr>
+
+                        <tr md-row style="border-bottom: 1px solid #333;">
+                          <td md-cell>Number of Minutes Logged in: {{ info.NumbHrs }}</td>
+                        </tr>
+                      
+                    </tbody>
+
+                  </table>
+
+                </div>
+
+              </div>
+            </div>
+            </md-table-container>
+          
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>
+
+</md-dialog>
+
