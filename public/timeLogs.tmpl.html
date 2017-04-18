@@ -101,7 +101,8 @@
 
       <md-tab label="View Time Logs">
         <md-content layout-padding class="md-padding">
-            <form name="EmpInfoForm">
+            <!-- <form name="EmpInfoForm"> -->
+            <form>
 
               <!-- <md-input-container class="md-block">
                 <label>Employee Username</label>
@@ -121,18 +122,18 @@
 
               </md-input-container>
  -->
-              <md-input-container class="md-block">
+              <!-- <md-input-container class="md-block">
 
                 <div style="display:inline-block; min-height:290px;">
                   
                   <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="{minMode: 'month'}" datepicker-popup="MM/yyyy" datepicker-mode="'month'"></div>
                 </div>
 
-                <!-- <input type="text" class="form-control" datepicker-popup="MM/yyyy" ng-model="dt" is-open="opened" datepicker-options="{minMode: 'month'}" datepicker-mode="'month'"/>
+                <input type="text" class="form-control" datepicker-popup="MM/yyyy" ng-model="dt" is-open="opened" datepicker-options="{minMode: 'month'}" datepicker-mode="'month'"/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span> -->
-              </md-input-container>
+                </span>
+              </md-input-container> -->
 
               <!-- <md-input-container class="md-block">
 
@@ -148,35 +149,70 @@
 
               </md-input-container> -->
 
+<!-- 
+              <md-input-container class="md-block">
 
-              <!-- <md-input-container class="md-block">
+                
 
-                <input date-range-picker class="form-control date-picker" type="text" ng-model="SelectedDate" />
+              </md-input-container> -->
 
-              </md-input-container>
-              -->
+              <input date-range-picker class="form-control date-picker" type="text" ng-model="SelectedDate" placeholder="Click Here to Select date" />
+
+
+              <input class="form-control" type="text" ng-model="formData.StartDate" name="StartDate" ng-hide="true" />
+              <input class="form-control" type="text" ng-model="formData.EndDate" name="EndDate" ng-hide="true"/>
+
+              <ul ng-repeat="(key, value) in allStafflogs | groupBy: 'STAFF_Username'">
+                Username: {{ key }}
+                <li ng-repeat="User in value">
+                  Time In- {{ User.TIME_LOGIN | date:'yyyy-MM-dd HH:mm:ss'}} 
+                  Time Out- {{ User.TIME_LOGOUT | date:'yyyy-MM-dd HH:mm:ss'}} 
+                </li>
+              </ul>
+
+
+              
+
+
+              <md-button ng-click="StartEndDate()" class="md-raised">Compute Number of Hours
+              </md-button>
+
+              <md-button ng-click="getAllStaffLogs()" class="md-raised">Detailed Log
+              </md-button>
+             
 
               <!-- <input type="text" class="form-control" datepicker-popup="MM/yyyy" ng-model="dt" is-open="opened" datepicker-options="{minMode: 'month'}" datepicker-mode="'month'"/>
               <span class="input-group-btn">
                   <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
               </span> -->
 
-              <md-input-container>
+              <!-- <md-input-container>
                 <input type="text" name="Month" ng-model="formData.Month" ng-disabled="true" ng-hide="true" />
               </md-input-container>
 
               <md-input-container>
                 <input type="text" name="Year" ng-model="formData.Year" ng-disabled="true" ng-hide="true" />
-              </md-input-container>
+              </md-input-container> -->
+
+              <!-- <md-dialog-actions layout="row">
+                <md-button ng-click="ShowTimeLogs()" md-autofocus type="submit" class="md-primary md-raised">
+                Search Employee Log
+                </md-button>
+                <md-button class="md-accent md-raised" ng-click="DownloadCSV()">Download as csv</md-button>
+              </md-dialog-actions> -->
+
+
 
             </form>
+            <div ng-show="numberofHours != null">
+              <ul ng-repeat="obj in numberofHours">
+                <li>{{ obj }}</li>
+              </ul>
 
-            <md-dialog-actions layout="row">
-              <md-button ng-click="ShowTimeLogs()" md-autofocus type="submit" class="md-primary md-raised">
-                Search Employee Log
-              </md-button>
-              <md-button class="md-accent md-raised" ng-click="DownloadCSV()">Download as csv</md-button>
-            </md-dialog-actions>
+            </div>
+            
+
+
 
 
             <md-table-container>

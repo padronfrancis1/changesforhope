@@ -1,5 +1,5 @@
 // JavaScript source code
-var myApp = angular.module('myApp', ['daterangepicker', 'ngFileUpload', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.datetimepicker']);
+var myApp = angular.module('myApp', ['angular.filter','daterangepicker', 'ngFileUpload', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.datetimepicker']);
 
 myApp.directive('validPasswordC', function() {
   return {
@@ -70,6 +70,20 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
 			};
 		}
 
+		$scope.SqlConnect = function(res, req) {
+			$http.get('/SqlConnect', function(){
+
+	    	}).then(function(err, connected){
+	    		
+	    		if(err) {
+	    			console.log(err);
+	    		} else {
+	    			console.log(connected);
+	    		}
+	    		
+	    	});
+		};
+
 
 		$scope.uploadFile = function(){
 
@@ -113,16 +127,6 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
 	    	});
 	    }
 
-	    // $scope.getFile = function() {
-	    // 	$http.get('/multer', function(res, err){
-	    // 		if(err) {
-	    // 			console.log("err");
-	    // 		} else {
-	    // 			console.log("Success");
-	    // 			console.log(res);
-	    // 		}
-	    // 	});
-	    // }
 
 		$scope.today = function() {
 			$scope.dt = new Date();
@@ -147,7 +151,7 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
         $scope.statuses = ('Approved Declined').split(' ').map(function (state) { return { abbrev: state }; });
 
         $scope.permissionType = '';
-        $scope.permissions = ('Admin Staff').split(' ').map(function (state) { return { abbrev: state }; });
+        $scope.permissions = ('Admin Team-Lead Staff').split(' ').map(function (state) { return { abbrev: state }; });
 
         $scope.permissionTypeFile = '';
         $scope.FilePermission = ('Rglr Admn').split(' ').map(function (state) { return { abbrev: state }; });
@@ -213,10 +217,7 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
 
 		$interval(tick, 1000);
 
-		// $http.get('/client/source').then(function(response){
 
-		// 	$scope.clients = response.data;
-		// });
 		$http.get('/client/source').then(function(response){
 
 			$scope.clients = response.data;
@@ -231,72 +232,7 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
 			});
 		}
 
-		// $scope.uploadPic = function(file) {
-		//     file.upload = Upload.upload({
-		//       url: '/files',
-		//       data: {file: file},
-		//     });
 
-		//     file.upload.then(function (response) {
-		//       $timeout(function () {
-		//         file.result = response.data;
-		//       });
-		//     }, function (response) {
-		//       if (response.status > 0)
-		//         $scope.errorMsg = response.status + ': ' + response.data;
-		//     }, function (evt) {
-		//       // Math.min is to fix IE which reports 200% sometimes
-		//       file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-		//     });
-	 //    }
-
-		// $scope.onFileSelect = function($files) {
-		// // $files: an array of files selected, each file has name, size, and type.
-		// 	for (var i = 0; i < $files.length; i++) {
-
-		// 	  var $file = $files[i];
-		// 	  $upload.upload({
-		// 	    url: '/files',
-		// 	    file: $file,
-		// 	    progress: function(e){}
-		// 	  }).then(function(data, status, headers, config) {
-		// 	    // file is uploaded successfully
-		// 			console.log("angular");
-			    
-		// 	    console.log(data);
-		// 	  }); 
-		// 	}
-		// }
-
-
-
-		// $scope.UploadFiles = function(res, req) {
-		// 	console.log("Add File");
-
-		// 	//console.log($scope.formData.UploadFile);
-		// 	var fu1 = document.getElementById("UploadFile");
-		// 	var permissionFile = $scope.signUpForm.FilePermission;
-
-		// 	// console.log(fu1.value);
-		// 	var str = fu1.value;
-		// 	var res = str.slice(12);
-
-		// 	$scope.labelFile = res;
-
-			
-
-
-		// 	$scope.DownloadUplaod.labelFile = $scope.labelFile;
-		// 	console.log($scope.DownloadUplaod.labelFile);
-
-			
-		// 	//alert("You selected " + fu1.value);
-
-		// 	$http.post('/mongoUpload', $scope.DownloadUplaod).success(function(data){
-
-		// 	});
-			
-		// };
 
 		$scope.DownloadFiles = function(files) {
 			console.log(files);
@@ -317,18 +253,6 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
 			
 		};
 
-		// $scope.DownloadFile = function(res, req) {
-		// 	console.log("Download File");
-		// 	$http.post('/download', $scope.formData).success(function(err, data){
-		// 		if(err) {
-		// 			console.log(err);		
-		// 		}
-		// 	});
-			
-		// };
-
-
-		// $scope.userExist = false;
 		$scope.userExist = true;
 		$scope.checkUserName = function(req, res) {
 			$scope.userExist = "";
@@ -396,18 +320,6 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
 				$scope.progressReportSpecific = data;
 			});
 		}
-
-
-
-
-		// $scope.ViewProgressReportSpecific = function(req, res) {
-
-		// 	$http.post('/employee/client/ViewProgressReportSpecific', $scope.formData).success(function(data){
-		// 		console.log(data);
-		// 		$scope.progressReportSpecific = data;
-		// 	});
-		// }
-
 
 		$scope.getClientInfo = function(req, res) {
 
@@ -629,6 +541,8 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
 			
 			$scope.SelectedDate = {startDate: null, endDate: null};
 
+
+
 			var tick = function() {
 			  $scope.clock = Date.now();
 			}
@@ -647,163 +561,235 @@ myApp.controller('MyCtrl',['$scope', '$http', '$filter',  '$interval', '$mdSiden
 				$mdDialog.hide(answer);
 			};
 
+			$scope.StartEndDate = function(res, req) {
 
-		// $scope.AddProgressReport = function(req, res) {
+				var isoDatestart = new Date($scope.SelectedDate.startDate);
+				var start = isoDatestart.toISOString();
+				var newStartDate = new Date(start);
+				var finalStartDate = moment(newStartDate).format("YYYY-MM-DD");
 
+				var isoDateend = new Date($scope.SelectedDate.endDate);
+				var end = isoDateend.toISOString();
+				var newEndDate = new Date(end);
+				var finalEndDate = moment(newEndDate).format("YYYY-MM-DD");
 
-		// 	$scope.date = new Date();
-		// 	$scope.converted_date = $filter('date')($scope.clock, 'medium'); // for conversion to string
+				//var start = $filter('date')($scope.SelectedDate.startDate, 'yyyy-MM-dd', 'UTC');
+				console.log(finalStartDate);
+				console.log(finalEndDate);	
 
-		// 	$scope.formData.progressReport_date = $scope.converted_date;
+				$scope.formData = {};
+				$scope.formData.StartDate = finalStartDate;
+				$scope.formData.EndDate = finalEndDate;
 
-		// 	$http.post('/employee/client/AddProgressReport', $scope.formData).success(function(data){
-				
-		// 		if(data) {
+				$http.post('/getStaffLogs', $scope.formData).success(function(data, err){
 
-		// 			$scope.progressReport = data;
-					
-		// 		} else {
-
-		// 			console.log("Progress Report not Added");
-
-		// 		}
-				
-
-		// 	});
-		// }
-
-
-
-
-
-		$scope.ShowTimeLogs = function(req, res) {
-
-			$scope.logs = "";
-			$scope.formData = {};
-
-			$scope.convertedDateLog_Month = $filter('date')($scope.dt, 'M');
-			$scope.convertedDateLog_Year = $filter('date')($scope.dt, 'yyyy');
-
-			console.log($scope.convertedDateLog_Month);
-			console.log($scope.convertedDateLog_Year);
-
-			// $scope.cnvrtdStartDate = $filter('date')($scope.SelectedDate.startDate, 'medium');
-			// $scope.cnvrtdEndDate = $filter('date')($scope.SelectedDate.endDate, 'medium');
-
-			// $scope.cnvrtdStartDate = moment($scope.SelectedDate.startDate);
-			// $scope.cnvrtdEndDate = moment($scope.SelectedDate.endDate);
-
-			// var res = {
-
-			// 	startDate: $scope.cnvrtdStartDate.format("M"),
-			// 	endDate: $scope.cnvrtdEndDate.format("YYYY"),
-			//     // exStartTime: e.format("MM/DD/YYYY hh:mm A"),
-			//     // exEndTime: f.format("MM/DD/YYYY hh:mm A")
-
-			// }
-
-			// console.log(res.startDate);
-			// console.log(res.endDate);
-
-			$scope.formData.Month = $scope.convertedDateLog_Month;
-			$scope.formData.Year = $scope.convertedDateLog_Year;
-
-
-			// console.log($scope.cnvrtdStartDate);
-			// console.log($scope.cnvrtdEndDate);
-
-			// $scope.formData.EmpInfoForDateLog = $scope.convertedDateLog;
-			// $scope.formData.EmpInfoForDateLog = $scope.cnvrtdStartDate;
-			// $scope.NullDate = false;
-
-			// if($scope.formData.EmpInfoForDateLog == null)
-			// {
-			// 	$scope.NullDate = true;
-				
-			// }
-			// else if($scope.formData.EmpInfoForDateLog != null)
-			// {
-			// 	$scope.NullDate = false;
-				$http.post('/employee/view/timeLogs', $scope.formData).success(function(data, err){
-
-					$scope.logs = data;
+					var hours = [];
 					if(data)
 					{
-						console.log("success");
 						console.log(data);
+						for(var i = 0; i < data.length; i++) {
+
+							var time = data[i].seconds;
+							var user = data[i].STAFF_Username;
+
+							
+
+							var date = new Date(null);
+							date.setSeconds(time);
+							var result = date.toISOString().substr(11, 8);
+
+
+							console.log(user);
+							console.log(result);
+							hours.push(user + ' - ' + result);
+							
+							
+						}
+						
+						
+						//$scope.numberofHours = 
 					} else {
 						console.log(err);
 					}
 					
+					$scope.numberofHours = hours;
+					console.log(data);
+					console.log(hours);
+						
+					});
+
+
+			}
+
+			$scope.getAllStaffLogs = function(res, req) {
+
+				var isoDatestart = new Date($scope.SelectedDate.startDate);
+				var start = isoDatestart.toISOString();
+				var newStartDate = new Date(start);
+				var finalStartDate = moment(newStartDate).format("YYYY-MM-DD");
+
+				var isoDateend = new Date($scope.SelectedDate.endDate);
+				var end = isoDateend.toISOString();
+				var newEndDate = new Date(end);
+				var finalEndDate = moment(newEndDate).format("YYYY-MM-DD");
+
+				//var start = $filter('date')($scope.SelectedDate.startDate, 'yyyy-MM-dd', 'UTC');
+				console.log(finalStartDate);
+				console.log(finalEndDate);	
+
+				$scope.formData = {};
+				$scope.formData.StartDate = finalStartDate;
+				$scope.formData.EndDate = finalEndDate;
+
+				$http.post('/getAllStaffLogs', $scope.formData).success(function(data, err){
+
+						
+					if(data)
+					{
+						
+						
+						// console.log(data);
+
+						// var myArray = data;
+
+						// var group_to_values = myArray.reduce(function(obj,item){
+						//     obj[item.STAFF_Username] = obj[item.STAFF_Username] || [];
+						//     obj[item.STAFF_Username].push(item.TIME_LOGIN, item.TIME_LOGOUT);
+
+
+						//     return obj;
+						// }, {});
+
+						// var groups = Object.keys(group_to_values).map(function(key){
+						//     return {STAFF_Username: key, TIME_LOGIN: group_to_values[key]};
+						// });
+
+						// console.log(groups);
+
+
+						    $scope.items = data         
+
+						    
+					        var result = {};
+					        angular.forEach(data, function(value, key) {
+					            if (!value.hasOwnProperty('TIME_LOGIN')) {
+					                result[key] = value;
+					            }
+					        });
+					        console.log(result);
+
+						
+						$scope.allStafflogs = data;
+						console.log(data);
+
+
+					} else {
+						console.log(err);
+					}
+						
+					});
+
+
+			}
+
+
+
+
+			$scope.ShowTimeLogs = function(req, res) {
+
+				$scope.logs = "";
+				$scope.formData = {};
+
+				$scope.convertedDateLog_Month = $filter('date')($scope.dt, 'M');
+				$scope.convertedDateLog_Year = $filter('date')($scope.dt, 'yyyy');
+
+
+
+				$scope.formData.Month = $scope.convertedDateLog_Month;
+				$scope.formData.Year = $scope.convertedDateLog_Year;
+
+
+
+					$http.post('/employee/view/timeLogs', $scope.formData).success(function(data, err){
+
+						$scope.logs = data;
+						if(data)
+						{
+							console.log("success");
+							console.log(data);
+						} else {
+							console.log(err);
+						}
+						
+					});
+				// }
+				// else
+				// {
+
+				// }
+			};
+
+
+
+			$scope.SearchEmployees = function(res, req)	{
+				
+				$http.post('/employee/view/empInfo', $scope.formData).success(function(data){
+
+					$scope.empInformation = data;
 				});
-			// }
-			// else
-			// {
+			};
 
-			// }
-		};
+			$scope.DownloadCSV = function(res, req) {
 
+				var dataLogs = $scope.logs;
+				var csvRows = [];
+				//csvRows.push(dataLogs[0].CurrentDate); 
+				
+				var stockData;
+				for(var i =0; i<dataLogs.length; i++) {
 
+					csvRows.push([
 
-		$scope.SearchEmployees = function(res, req)	{
-			
-			$http.post('/employee/view/empInfo', $scope.formData).success(function(data){
+						"user: " + " " + dataLogs[i].username ,
+						"TimeIn	:" + " " + dataLogs[i].TimeIn, 
+						"timeout:" + " " + dataLogs[i].TimeOut,
+						dataLogs[i].NumbHrs,
+						"\n"
 
-				$scope.empInformation = data;
-			});
-		};
-
-		$scope.DownloadCSV = function(res, req) {
-
-			var dataLogs = $scope.logs;
-			var csvRows = [];
-			//csvRows.push(dataLogs[0].CurrentDate); 
-			
-			var stockData;
-			for(var i =0; i<dataLogs.length; i++) {
-
-				csvRows.push([
-
-					"user: " + " " + dataLogs[i].username ,
-					"TimeIn	:" + " " + dataLogs[i].TimeIn, 
-					"timeout:" + " " + dataLogs[i].TimeOut,
-					dataLogs[i].NumbHrs,
-					"\n"
-
-				]);
+					]);
 
 
-			}
+				}
 
-			// for(var x = 0; x < csvRows.length; x ++)
-			// {
-			// 	console.log(csvRows[x].username);
-			// 	// if(csvRows[x].user =! csvRows[x - 1].user) {
-			// 	// 	console.log(csvRows[x].username);
-			// 	// 	console.log("not the same");
-			// 	// }
-			// }
-			
-			// for(var j=1; j<10; ++j){ 
-			//     A.push([j, Math.sqrt(j)]);
-			// }
+				// for(var x = 0; x < csvRows.length; x ++)
+				// {
+				// 	console.log(csvRows[x].username);
+				// 	// if(csvRows[x].user =! csvRows[x - 1].user) {
+				// 	// 	console.log(csvRows[x].username);
+				// 	// 	console.log("not the same");
+				// 	// }
+				// }
+				
+				// for(var j=1; j<10; ++j){ 
+				//     A.push([j, Math.sqrt(j)]);
+				// }
 
-			// var csvRows = [];
+				// var csvRows = [];
 
-			for(var i=0, l=csvRows.length; i<l; ++i){
-			    csvRows.push(csvRows[i].join(','));
-			}
+				for(var i=0, l=csvRows.length; i<l; ++i){
+				    csvRows.push(csvRows[i].join(','));
+				}
 
-			var csvString = csvRows.join("%0A");
-			var a = document.createElement('a');
-			a.href = 'data:attachment/csv,' + csvString;
-			a.target = '_blank';
-			a.download = dataLogs[0].username + '.csv';
+				var csvString = csvRows.join("%0A");
+				var a = document.createElement('a');
+				a.href = 'data:attachment/csv,' + csvString;
+				a.target = '_blank';
+				a.download = dataLogs[0].username + '.csv';
 
-			document.body.appendChild(a);
-			a.click();
+				document.body.appendChild(a);
+				a.click();
 
-		};
+			};
 
 
 

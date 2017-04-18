@@ -12,8 +12,8 @@ var mongodb = require('mongodb');
 /* employee logic layer */
 
 var multer  = require('multer');
-var uri = 'mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope'
-// var uri = 'mongodb://localhost:27017/changesforhope';
+// var uri = 'mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope'
+var uri = 'mongodb://localhost:27017/changesforhope';
 var assert = require('assert');
 var fs = require('fs');
 var mongodb = require('mongodb');
@@ -31,8 +31,8 @@ var mongodb = require('mongodb');
 var path = require('path');
 
 var storage = require('multer-gridfs-storage')({
-  url: 'mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope',
-  // url: 'mongodb://localhost/changesforhope',
+  // url: 'mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope',
+  url: 'mongodb://localhost/changesforhope',
 
   // root: 'myfiles',
    filename: function(req, file, cb) {
@@ -139,7 +139,7 @@ router.get('/', function(req, res, next) {
 
  // res.redirect('/login');
 
-  if (req.session.PermissionType == "Admin") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
 
   	res.render('index', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -194,7 +194,7 @@ router.get('/logout', users.logoutUser, function(req, res, next) {
 router.get('/DownloadUpload', function(req, res, next) {
 
 
-  if (req.session.PermissionType == "Admin") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
 
     res.render('DownloadUpload', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -218,7 +218,7 @@ router.get('/DownloadFiles', function(req, res, next) {
 
     res.render('DownloadFiles', {username: req.session.username, msg: req.session.msg, PermissionType: "Staff" });
 
-  } else if (req.session.PermissionType == "Admin"){
+  } else if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead"){
 
     res.render('index', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -234,7 +234,7 @@ router.get('/DownloadFiles', function(req, res, next) {
 router.get('/user', function(req, res, next) {
   
 
-  if (req.session.PermissionType == "Admin") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
 
     res.render('user', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -256,7 +256,7 @@ router.get('/user', function(req, res, next) {
 
 router.get('/reports', function(req, res, next) {
   
-  if (req.session.PermissionType == "Admin") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
 
     res.render('progressReport', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -276,7 +276,7 @@ router.get('/reports', function(req, res, next) {
 router.get('/IncidentReports', function(req, res, next) {
   
 
-  if (req.session.PermissionType == "Admin") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
 
     res.render('incident', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -313,7 +313,7 @@ router.get('/signup', function(req, res, next) {
 router.get('/adminPage', function(req, res) {
 
 
-  if (req.session.PermissionType == "Admin") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
 
     res.render('adminpage', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -355,7 +355,7 @@ router.get('/adminPage', function(req, res) {
 router.get('/error', function(req, res) {
 
 
-  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Staff") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Staff" || req.session.PermissionType == "Team-Lead" ) {
 
 
     res.render('login'); // ejs file
@@ -372,7 +372,7 @@ router.get('/error', function(req, res) {
 router.get('/success', function(req, res) {
 
 
-  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Staff") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Staff" || req.session.PermissionType == "Team-Lead") {
 
 
     res.render('login'); // ejs file
@@ -389,7 +389,7 @@ router.get('/success', function(req, res) {
 
 router.get('/addClient', function(req, res) {
 
-  if (req.session.PermissionType == "Admin") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
 
     res.render('adminAddClient', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -409,7 +409,7 @@ router.get('/addClient', function(req, res) {
 
 router.get('/clientsProfile', function(req, res, next) {
 
-  if (req.session.PermissionType == "Admin") {
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
 
     res.render('clientsProfile', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
 
@@ -425,6 +425,49 @@ router.get('/clientsProfile', function(req, res, next) {
   }
 
 }); 
+
+router.get('/reports', function(req, res, next) {
+  
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
+
+    res.render('progressReport', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
+
+  } else if (req.session.PermissionType == "Staff"){
+
+    res.render('progressReport', {username: req.session.username, msg: req.session.msg, PermissionType: "Staff" });
+
+  } else {
+
+    req.session.msg = 'Access denied!';
+
+    res.redirect('/login');
+  }
+
+});
+
+
+router.get('/records', function(req, res, next) {
+
+  console.log("records");
+
+  if (req.session.PermissionType == "Admin" || req.session.PermissionType == "Team-Lead") {
+
+    res.render('records', {username: req.session.username, msg: req.session.msg, PermissionType: "Admin" });
+
+  } else if (req.session.PermissionType == "Staff"){
+
+    res.render('records', {username: req.session.username, msg: req.session.msg, PermissionType: "Staff" });
+
+  } else {
+
+    req.session.msg = 'Access denied!';
+
+    res.redirect('/login');
+  }
+
+}); 
+
+
 
 // router.get('/DownloadFiles', function(req, res, next) {
 
@@ -482,6 +525,10 @@ router.post('/checkUserName', users.checkUserName);
 //router.post('/mongoDownload', users.DownloadFiles);
 router.get('/adminFiles', users.ListAdminFiles);
 router.get('/staffFiles', users.ListStaffFiles);
+router.get('/SqlConnect', users.SqlConnect);
 // router.get('/SearchFiles', users.SearchFile);
+
+router.post('/getStaffLogs', users.getStaffLogs);
+router.post('/getAllStaffLogs', users.getAllStaffLogs);
 
 module.exports = router;
