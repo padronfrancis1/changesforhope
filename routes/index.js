@@ -12,8 +12,8 @@ var mongodb = require('mongodb');
 /* employee logic layer */
 
 var multer  = require('multer');
-// var uri = 'mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope'
-var uri = 'mongodb://localhost:27017/changesforhope';
+var uri = 'mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope'
+// var uri = 'mongodb://localhost:27017/changesforhope';
 var assert = require('assert');
 var fs = require('fs');
 var mongodb = require('mongodb');
@@ -31,8 +31,8 @@ var mongodb = require('mongodb');
 var path = require('path');
 
 var storage = require('multer-gridfs-storage')({
-  // url: 'mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope',
-  url: 'mongodb://localhost/changesforhope',
+  url: 'mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope',
+  // url: 'mongodb://localhost/changesforhope',
 
   // root: 'myfiles',
    filename: function(req, file, cb) {

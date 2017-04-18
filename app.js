@@ -26,8 +26,8 @@ require('./models/incidentReports_model.js'); // ensures that document is regist
 
 //var conn = mongoose.connect('mongodb://localhost/changesforhope');
 mongoose.Promise = global.Promise;
-// var db = mongoose.connect('mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope');
-var db = mongoose.connect('mongodb://localhost/changesforhope');
+var db = mongoose.connect('mongodb://admin:admin@ds145329.mlab.com:45329/changesforhope');
+// var db = mongoose.connect('mongodb://localhost/changesforhope');
 
 
 var routes = require('./routes/index');
